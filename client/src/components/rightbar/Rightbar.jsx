@@ -1,5 +1,4 @@
 import "./rightbar.css";
-import { Users } from "../../dummyData";
 import Online from "../online/Online";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
@@ -7,10 +6,10 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { Add, Remove } from "@material-ui/icons";
 
-export default function Rightbar({ user }) {
+export default function Rightbar({ currentUser }) {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [friends, setFriends] = useState([]);
-  const { user: currentUser, dispatch } = useContext(AuthContext);
+  const { dispatch } = useContext(AuthContext);
   const [followed, setFollowed] = useState(
     currentUser.followings.includes(user?.id)
   );
@@ -18,8 +17,8 @@ export default function Rightbar({ user }) {
   useEffect(() => {
     const getFriends = async () => {
       try {
-        const friendList = await axios.get("/users/friends/" + user._id);
-        setFriends(friendList.data);
+        const res = await axios.get("/user/friends/" + user._id);
+        setFriends(res.data);
       } catch (err) {
         console.log(err);
       }
@@ -30,12 +29,12 @@ export default function Rightbar({ user }) {
   const handleClick = async () => {
     try {
       if (followed) {
-        await axios.put(`/users/${user._id}/unfollow`, {
+        await axios.put(`/user/${user._id}/unfollow`, {
           userId: currentUser._id,
         });
         dispatch({ type: "UNFOLLOW", payload: user._id });
       } else {
-        await axios.put(`/users/${user._id}/follow`, {
+        await axios.put(`/user/${user._id}/follow`, {
           userId: currentUser._id,
         });
         dispatch({ type: "FOLLOW", payload: user._id });
@@ -57,7 +56,7 @@ export default function Rightbar({ user }) {
         <img className="rightbarAd" src="assets/ad.png" alt="" />
         <h4 className="rightbarTitle">Online Friends</h4>
         <ul className="rightbarFriendList">
-          {Users.map((u) => (
+          {friends.map((u) => (
             <Online key={u.id} user={u} />
           ))}
         </ul>
@@ -89,9 +88,9 @@ export default function Rightbar({ user }) {
             <span className="rightbarInfoValue">
               {user.relationship === 1
                 ? "Single"
-                : user.relationship === 1
-                ? "Married"
-                : "-"}
+                : user.relationship === 2
+                  ? "Married"
+                  : "-"}
             </span>
           </div>
         </div>
@@ -104,11 +103,7 @@ export default function Rightbar({ user }) {
             >
               <div className="rightbarFollowing">
                 <img
-                  src={
-                    friend.profilePicture
-                      ? PF + friend.profilePicture
-                      : PF + "person/noAvatar.png"
-                  }
+                  src={PF + (friend?.profilPicture || "person/noAvatar.png")}
                   alt=""
                   className="rightbarFollowingImg"
                 />

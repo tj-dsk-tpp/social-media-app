@@ -7,14 +7,14 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router";
 
-export default function Profile() {
+export default function Profile(currentUser) {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [user, setUser] = useState({});
   const username = useParams().username;
 
   useEffect(() => {
     const fetchUser = async () => {
-      const res = await axios.get(`/users?username=${username}`);
+      const res = await axios.get(`/user?username=${username}`);
       setUser(res.data);
     };
     fetchUser();
@@ -24,7 +24,7 @@ export default function Profile() {
     <>
       <Topbar />
       <div className="profile">
-        <Sidebar />
+        <Sidebar user={currentUser} />
         <div className="profileRight">
           <div className="profileRightTop">
             <div className="profileCover">
@@ -54,7 +54,7 @@ export default function Profile() {
           </div>
           <div className="profileRightBottom">
             <Feed username={username} />
-            <Rightbar user={user} />
+            <Rightbar user={currentUser} />
           </div>
         </div>
       </div>

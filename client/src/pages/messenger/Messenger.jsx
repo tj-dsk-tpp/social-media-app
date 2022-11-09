@@ -17,7 +17,7 @@ const Messenger = () => {
     const [onlineUsers, setOnlineUsers] = useState([]);
     const { user } = useContext(AuthContext);
     const scrollRef = useRef();
-    const socket = userRef();
+    const socket = useRef();
 
     useEffect(() => {
         socket.current = io("ws://localhost:8900");
