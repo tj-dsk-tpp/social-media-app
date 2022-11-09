@@ -34,22 +34,23 @@ const storage = multer.diskStorage({
     cb(null, "public/images");
   },
   filename: (req, file, cb) => {
-    cb(null, req.body.name);
+    cb(null, file.originalname);
   },
 });
 
 const upload = multer({ storage: storage });
 app.post("/api/upload", upload.single("file"), (req, res) => {
   try {
-    return res.status(200).json("File uploded successfully");
+    res.status(200).json("File uploded successfully");
   } catch (error) {
     console.error(error);
+    res.status(500).json("an error occoured");
   }
 });
 
 app.use("/api/auth", authRoute);
-app.use("/api/users", userRoute);
-app.use("/api/posts", postRoute);
+app.use("/api/user", userRoute);
+app.use("/api/post", postRoute);
 app.use("/api/conversation", conversationRoute);
 app.use("/api/message", messageRoute);
 
