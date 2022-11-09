@@ -1,21 +1,22 @@
 {
-  "name": "react-social",
-  "version": "0.1.0",
+  "name": "social-app-react-frontend",
+  "version": "1.0.0",
   "private": true,
+  "author": "Tushar Jain",
   "dependencies": {
-    "@material-ui/core": "^4.11.3",
-    "@material-ui/icons": "^4.11.2",
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.1.10",
-    "axios": "^0.21.1",
+    "@material-ui/core": "^4.12.4",
+    "@material-ui/icons": "^4.11.3",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^12.1.5",
+    "@testing-library/user-event": "^14.4.3",
+    "axios": "^1.1.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-router-dom": "^5.2.0",
-    "react-scripts": "4.0.3",
+    "react-router-dom": "^6.4.3",
+    "react-scripts": "^5.0.1",
     "socket.io-client": "^4.5.3",
     "timeago.js": "^4.0.2",
-    "web-vitals": "^1.0.1"
+    "web-vitals": "^3.0.4"
   },
   "scripts": {
     "start": "react-scripts start",
